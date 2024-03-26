@@ -13,10 +13,10 @@ class AuthContoller extends Controller
     public function store(Request $request)
     {
         $user = $request->all();
-        dd($user);
+        // dd($user);
         $us = User::create($user);
         return response()->json([
-            "message" => "added",
+            "message" => "User added successfully!",
             "User" => $us,
         ]);
     }
@@ -25,18 +25,22 @@ class AuthContoller extends Controller
     {
         $userId = User::find($id);
         $user = $request->all();
-        if ($user["password"] == "") {
-            $userId["name"] = $user["name"];
-            $userId["email"] = $user["email"];
-            $userId->update();
-            return response()->json(["data" => $userId]);
-        } else {
-            $userId["name"] = $user["name"];
-            $userId["email"] = $user["email"];
-            $userId["passwrd"] = $user["password"];
-            $userId->update();
-            return response()->json(["data" => $userId]);
-        }
+        $userId->update($user);
+        return response()->json(['message' => 'User updated successfully!'], 200);
+        // if ($user["password"] == "") {
+        //     $userId["name"] = $user["name"];
+        //     $userId["email"] = $user["email"];
+        //     $userId->update();
+        // } else {
+        //     $userId["name"] = $user["name"];
+        //     $userId["email"] = $user["email"];
+        //     $userId["passwrd"] = $user["password"];
+        //     $userId->update();
+        //     return response()->json([
+        //         'message' => 'User updated successfully!',
+        //         "data" => $userId
+        //     ]);
+        // }
     }
 
     public function destroy($id)
