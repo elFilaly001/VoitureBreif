@@ -26,7 +26,7 @@ class AuthContoller extends Controller
         $userId = User::find($id);
         $user = $request->all();
         $userId->update($user);
-        return response()->json(['message' => 'User updated successfully!'], 200);
+        return response()->json(['message' => 'User updated successfully!']);
     }
 
     public function destroy($id)
