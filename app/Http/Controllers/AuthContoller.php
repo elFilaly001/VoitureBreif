@@ -27,20 +27,6 @@ class AuthContoller extends Controller
         $user = $request->all();
         $userId->update($user);
         return response()->json(['message' => 'User updated successfully!'], 200);
-        // if ($user["password"] == "") {
-        //     $userId["name"] = $user["name"];
-        //     $userId["email"] = $user["email"];
-        //     $userId->update();
-        // } else {
-        //     $userId["name"] = $user["name"];
-        //     $userId["email"] = $user["email"];
-        //     $userId["passwrd"] = $user["password"];
-        //     $userId->update();
-        //     return response()->json([
-        //         'message' => 'User updated successfully!',
-        //         "data" => $userId
-        //     ]);
-        // }
     }
 
     public function destroy($id)
