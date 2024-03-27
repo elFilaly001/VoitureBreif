@@ -7,3 +7,20 @@ use Illuminate\Support\Facades\Route;
 Route::post('/user', [AuthContoller::class, "store"]);
 Route::put('/updateUser/{user}', [AuthContoller::class, "update"]);
 Route::delete('/deleteUser/{user}', [AuthContoller::class, "destroy"]);
+
+
+Route::group(
+    [
+
+        'middleware' => 'api',
+        'prefix' => 'auth'
+
+    ],
+    function ($router) {
+
+        Route::post('login', 'AuthController@login');
+        Route::post('logout', 'AuthController@logout');
+        Route::post('refresh', 'AuthController@refresh');
+        Route::post('me', 'AuthController@me');
+    }
+);
