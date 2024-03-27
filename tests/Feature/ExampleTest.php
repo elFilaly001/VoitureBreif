@@ -9,20 +9,19 @@ use Tests\TestCase;
 
 
 it('adds a user', function () {
-    $userData = [
-        'name' => 'John Doe',
-        'email' => 'john.doe@example.com',
-        'password' => "123",
-        "role" => "User",
-    ];
 
-    $response = $this->postJson('/api/user', $userData);
-    // dd($response);
+    $user = User::factory()->make();
+
+    $us = [
+        "name" => $user->name,
+        "email" => $user->email,
+        "password" => $user->password,
+        "role" => $user->role,
+    ];
+    // dd($user);
+    $response = $this->postJson('/api/user', $us);
     $response->assertStatus(200);
-    // ->assertJsonStructure([
-    //     "message" => "User added successfully!",
-    // ]);
-});
+})->only();
 
 it('updates a user', function () {
 

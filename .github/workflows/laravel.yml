@@ -33,7 +33,7 @@ jobs:
       
     - name: Setup Laravel
       run: |
-        cp .env.example .env
+        cp .env.test .env
         php artisan key:generate
 
     - name: Run migrations

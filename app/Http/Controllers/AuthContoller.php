@@ -18,7 +18,7 @@ class AuthContoller extends Controller
         return response()->json([
             "message" => "User added successfully!",
             "User" => $us,
-        ]);
+        ], 200);
     }
 
     public function update(Request $request, $id)
