@@ -28,8 +28,10 @@ jobs:
         php-version: 'latest'
     - uses: actions/checkout@v3
     
-    - name: Install Dependencies
+    - name: Update Dependencies
       run: composer update
+
+    - name: Install Dependencies
       run: composer install
       
     - name: Setup Laravel
