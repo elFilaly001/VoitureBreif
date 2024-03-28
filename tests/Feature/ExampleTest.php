@@ -5,6 +5,7 @@ use GuzzleHttp\Psr7\Message;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Pest\Laravel;
+use Pest\Plugins\Only;
 use Tests\TestCase;
 
 
@@ -21,7 +22,7 @@ it('adds a user', function () {
     // dd($user);
     $response = $this->postJson('/api/user', $us);
     $response->assertStatus(200);
-})->only();
+});
 
 it('updates a user', function () {
 
@@ -49,4 +50,14 @@ it('deletes a user', function () {
     $response = $this->deleteJson('/api/deleteUser/' . $user->id . '');
     $response->assertStatus(200);
     $this->assertEquals('deleted', $response['message']);
+});
+
+
+it('logs in ', function () {
+    $user = [
+        "email" => "ana@gmail.com",
+        "password" => "123",
+    ];
+    $response = $this->postJson("/api/login", $user);
+    $response->assertStatus(200);
 });

@@ -13,13 +13,19 @@ class AuthContoller extends Controller
 {
     public function store(Request $request)
     {
-        $user = $request->all();
+        $token = $request->only("token");
+        $user = $request->only("name", "email", "password", "role");
         // dd($user);
-        $us = User::create($user);
-        return response()->json([
-            "message" => "User added successfully!",
-            "User" => $us,
-        ], 200);
+        if ($token = auth()->attempt($token)) {
+            dd($user);
+            $us = User::create($user);
+            return response()->json([
+                "message" => "User added successfully!",
+                "User" => $us,
+            ], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
     }
 
     public function update(Request $request, $id)
@@ -35,5 +41,26 @@ class AuthContoller extends Controller
         $user = User::find($id);
         $user->delete();
         return response()->json(["message" => "deleted"]);
+    }
+
+    public function login()
+    {
+
+        dd(Auth::user());
+        $credentials = request(['email', 'password']);
+
+        if (!$token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        return $this->respondWithToken($token);
+    }
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
     }
 }
